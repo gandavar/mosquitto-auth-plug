@@ -498,7 +498,11 @@ int mosquitto_auth_acl_check(void *userdata, const char *clientid, const char *u
 	for (bep = ud->be_list; bep && *bep; bep++) {
 		struct backend_p *b = *bep;
 
-		match = b->superuser(b->conf, username);
+#if BE_HTTP
+		match = b->superuser(b->conf, username, topic);
+#else
+ 		match = b->superuser(b->conf, username);
+#endif
 		if (match == 1) {
 			_log(LOG_DEBUG, "aclcheck(%s, %s, %d) SUPERUSER=Y by %s",
 				username, topic, access, b->name);

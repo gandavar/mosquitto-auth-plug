@@ -310,11 +310,11 @@ char *be_http_getuser(void *handle, const char *username, const char *password, 
 	return NULL;
 };
 
-int be_http_superuser(void *handle, const char *username)
+int be_http_superuser(void *handle, const char *username, const char *topic)
 {
 	struct http_backend *conf = (struct http_backend *)handle;
 
-	return http_post(handle, conf->superuser_uri, NULL, username, NULL, NULL, -1, METHOD_SUPERUSER);
+	return http_post(handle, conf->superuser_uri, NULL, username, NULL, topic, -1, METHOD_SUPERUSER);
 };
 
 int be_http_aclcheck(void *handle, const char *clientid, const char *username, const char *topic, int acc)
